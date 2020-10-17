@@ -11,7 +11,8 @@ sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8')
 sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
 
 
-titanic_df = pd.read_csv('g:/python/section2/python_practice/ai/titanic_train.csv')
+# titanic_df = pd.read_csv('g:/python/section2/python_practice/ai/titanic_train.csv')
+titanic_df = pd.read_csv('/Users/shinilkim/Documents/python/python_practice/ai/titanic_train.csv')
 titanic_df.head(3)
 
 titanic_df['Age'].fillna(titanic_df['Age'].mean(),inplace=True)
@@ -58,7 +59,7 @@ def encode_features(dataDF):
     return dataDF
 
 titanic_df = encode_features(titanic_df)
-titanic_df.head()
+print(titanic_df.head())
 
 # Null 처리 함수
 def fillna(df):
@@ -91,7 +92,8 @@ def transform_features(df):
     return df
 
 # 원본 데이터를 재로딩 하고, feature데이터 셋과 Label 데이터 셋 추출.
-titanic_df = pd.read_csv('g:/python/section2/python_practice/ai/titanic_train.csv')
+# titanic_df = pd.read_csv('g:/python/section2/python_practice/ai/titanic_train.csv')
+titanic_df = pd.read_csv('/Users/shinilkim/Documents/python/python_practice/ai/titanic_train.csv')
 y_titanic_df = titanic_df['Survived']
 X_titanic_df= titanic_df.drop('Survived',axis=1)
 

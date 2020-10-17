@@ -17,11 +17,20 @@ base = "https://www.naver.com/"
 quote = ""
 url = base
 
-self.config = NaverImageCrwling.get_information()
-self.chrome_driver = None
-self.cllct_time = time.strftime("%Y%m%d", time.localtime())
+class ImageGet:
 
-if self.config["result"]:
+
+    def __init__(self):
+
+        self.config = NaverImageCrwling.get_information()
+        self.chrome_driver = None
+        self.cllct_time = time.strftime("%Y%m%d", time.localtime())
+
+    def get_image_data(self):
+        """
+        :return:
+        """
+        if self.config["result"]:
 
             sess = req.Session()
 
@@ -62,8 +71,36 @@ if self.config["result"]:
             finally:
                 sess.close()
 
-else:
+        else:
             print ("파일이 존재 하지 않는다.")
+
+    def image_download(self, url):
+        """
+        참고 사이트 : https://www.it-swarm.dev/ko/python/python-url%EC%97%90%EC%84%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%A0%80%EC%9E%A5/1053949951/
+        :param url:
+        :return:
+        """
+        # https ssl 처리
+        context = ssl._create_unverified_context()
+
+        try:
+
+            html = urlopen(url, context=context)
+        except:
+            print ("request fail !!")
+            pass
+        else:
+
+            with open("./result_image/naver_image_{}.jpg".format(self.cllct_time), "wb") as f:
+                f.write(html.read())
+                f.close()
+
+            print ("image download success")
+
+
+if __name__ == "__main__":
+    image_object = ImageGet()
+    image_object.get_image_data()
 
 # res = req.urlopen(url).read()
 #
@@ -84,13 +121,13 @@ else:
 
 
 
-try:
-    if not(os.path.isdir(savePath)):
-        os.makedirs(os.path.join(savePath))
-except OSError as e:
-    if e.errno != errno.EEXIST:
-        print("Failed to create directory!!!!!")
-        raise
+# try:
+#     if not(os.path.isdir(savePath)):
+#         os.makedirs(os.path.join(savePath))
+# except OSError as e:
+#     if e.errno != errno.EEXIST:
+#         print("Failed to create directory!!!!!")
+#         raise
 
 
 # for i,e in enumerate(recommand,1):
@@ -98,5 +135,3 @@ except OSError as e:
 #         f.write(e.select_one("h4.block_title > a ").string)
 #     fullfilename = os.path.join(savePath, savePath+'img_'+str(i)+'.png')
 #     req.urlretrieve(e.select_one("div.block_media > a > img")['src'],fullfilename)
-
-print("강좌 정보 텍스트 출력 및 이미지 다운 완료!")
