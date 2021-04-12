@@ -52,8 +52,6 @@ from sklearn.metrics.pairwise import cosine_similarity
 similarity_simple_pair = cosine_similarity(feature_vect_simple[0] , feature_vect_simple)
 print(similarity_simple_pair)
 
-from sklearn.metrics.pairwise import cosine_similarity
-
 similarity_simple_pair = cosine_similarity(feature_vect_simple[0] , feature_vect_simple[1:])
 print(similarity_simple_pair)
 
